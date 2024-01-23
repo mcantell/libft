@@ -1,85 +1,63 @@
-static int ft_count(char *str, char c)
-{
-    int i;
-    int word;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mcantell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/22 16:39:54 by mcantell          #+#    #+#             */
+/*   Updated: 2024/01/23 13:21:31 by mcantell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-    i = 0;
-    word = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] != c)
-        {
-            word++;
-            while (str[i] != c && str[i])
-                i++;
-            if (str[i] == NULL)
-                return (word);
-        }
-        i++;
-    }
-    return (word);
+#include "libft.h"
+
+static int	ft_count(const char *str, char c)
+{
+	size_t	i;
+	size_t	word;
+
+	i = 0;
+	word = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] != c)
+		{
+			word++;
+			while (str[i] != c && str[i] != '\0')
+				i++;
+		}
+		else
+			i++;
+	}
+	return (word);
 }
 
-static void ft_strlcpy(char *word, char *str, char c; int j)
+char	**ft_split(char const *s, char c)
 {
-    int i;
+	char	**str;
+	size_t	i;
+	size_t	f;
 
-    i - 0;
-    while (str[j] && str[j] != j)
-        j++;
-    while (str[j + i] && str[j + i] != c)
-    { 
-        word[i] = str[j + i];
-            i++;
-    }
-    word[i] = '\0';
-}
-
-static ft_stralloc(char *str, char c, int *f)
-{
-    char *ma;
-    int i;
-
-    i = *f;
-    ma = NULL;
-    while (str[*f])
-    {
-        if (str[*f] != c)
-        {
-            while (str[*f] && str[*f] != c)
-                *f +=;
-            ma = (char *)malloc(sizeof(char) * (*f + 1));
-            if (ma = NULL)
-                return (NULL);
-            break;
-        }
-        *f += 1;
-    }
-    ft_strlcpy(ma, str, c, i)
-    return (ma);
-}
-
-char **ft_split(char const *s, char c)
-{
-    int j;
-    int l;
-    int g;
-    char **strl;
-
-    j = 0;
-    l = ft_count((char *)s, c);
-    g = 0;
-    strl = (char *)malloc(sizeof(char *) * (j + g));
-    if (s == NULL)
-        return (NULL);
-    if (strl == NULL)
-        return (NULL);
-    while (j < l)
-    {
-        strl[j] = ft_stralloc((char *)strl, c, &g);
-        if (strl[j] == NULL)
-            free(strl[j]);
-        j++;
-    }
-    return (strl);
+	i = 0;
+	if (!s)
+		return ('\0');
+	str = malloc(sizeof(char *) * (ft_count((char *)s, c) + 1));
+	if (!str)
+		return ('\0');
+	while (*s)
+	{
+		if (*s != c)
+		{
+			f = 1;
+			while (*s && *s != c && f++)
+				s++;
+			str[i] = ft_substr(s - f + 1, 0, f - 1);
+			i++;
+		}
+		else
+			s++;
+	}
+	str[i] = '\0';
+	return (str);
 }

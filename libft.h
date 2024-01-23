@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mcantell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/22 13:36:04 by mcantell          #+#    #+#             */
+/*   Updated: 2024/01/23 18:37:35 by mcantell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 
-int ft_atoi(const char *str);
-void *ft_bzero(void *s, size_t n);
+int	ft_atoi(const	char	*str);
+void	*ft_bzero(void *s, size_t n);
 void *ft_calloc(size_t count, size_t size);
 int ft_isalnum(int  i);
 int ft_isalpha(int  i);
@@ -36,3 +49,13 @@ char *ft_strtrim(char const *s1, char const *set);
 char *ft_substr(char const *s, unsigned int start, size_t len);
 int ft_tolower(int  i);
 int ft_toupper(int  i);
+typedef struct s_list
+{
+	void *content;
+	struct s_list *next;
+}				t_list;
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
+void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstnew(void *content);
+int	ft_lstsize(t_list *lst);

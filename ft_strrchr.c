@@ -5,11 +5,12 @@ char *ft_strrchr(const char *str, int i)
     int b;
 
     b = ft_strlen(str);
-
-    while (b != 0)
+    if (i == '\0')
+        return ((char *)str + b);
+    while (b >= 0)
     {
-        if (*str == (char)i)
-            return (str);
+        if (str[b] == i)
+            return ((char *)str + b);
         b--;
     }
     return (NULL);

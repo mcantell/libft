@@ -1,4 +1,4 @@
-int ft_strlen(constant char *str)
+int ft_strlen(const char *str)
 {
     unsigned int i;
     

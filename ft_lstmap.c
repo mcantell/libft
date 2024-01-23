@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcantell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 10:14:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/01/23 12:04:31 by mcantell         ###   ########.fr       */
+/*   Created: 2024/01/23 17:12:57 by mcantell          #+#    #+#             */
+/*   Updated: 2024/01/23 20:11:25 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	size_t	i;
-	size_t	l;
-	char	*str;
+	t_list	*new;
+	t_list	*z;
 
-	i = 0;
-	str = NULL;
-	l = ft_strlen(s1);
-	if (s1)
+	if (!lst || !f)
+		return (NULL);
+	new = ft_lstnew(f(lst-> content));
+	if (!new)
+		return (NULL);
+	z = new;
+	lst = lst->next;
+	while (lst)
 	{
-		while (s1[i] && ft_strchr(set, s1[i]))
-			i++;
-		while (s1[l - 1] && ft_strchr(set, s1[l - 1]))
-			l--;
-		str = (char *)malloc(sizeof(char) * (l - i + 1));
-		if (!str)
+		z->next = ft_lstnew(f(lst->content)); //cosí ti crei la casella succcessiva
+		if (!z->next)
+		{
+			ft_lstclear(&new, del);
 			return (NULL);
-		if (str)
-			ft_strlcpy(str, &s1[i], l - i + 1);
+		}
+		lst = lst->next;
+		z = z->next;//cosí ti ci sposti dentro
 	}
-	return (str);
+	return (new);
 }
